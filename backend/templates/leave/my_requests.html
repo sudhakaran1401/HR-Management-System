@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-- HEADER -->
+<div class="page-header d-flex justify-content-between align-items-center">
+
+  {% if viewer_role == "Employee" %}
+    <h4 class="mb-0 fw-bold">My Leave Requests</h4>
+    <a href="{% url 'apply_leave' %}" class="btn btn-primary btn-sm btn-action">
+      + Apply Leave
+    </a>
+  {% else %}
+    <h4 class="mb-0 fw-bold">Leave Requests</h4>
+  {% endif %}
+
+</div>
+
+<!-- CARD -->
+<div class="card shadow-sm table-card">
+  <div class="card-body">
+
+    <!-- SEARCH -->
+    <input id="globalSearch" class="form-control search-box mb-3"
+           placeholder="Search leave requests...">
+
+    {% include "components/LiveSearch.html" %}
+
+    {% if leave_requests %}
+
+    <!-- TABLE -->
+    <div class="table-responsive">
+
+      <table class="table align-middle" id="MyLeaveRequests">
+
+        <thead>
+          <tr>
+            <th>Employee</th>
+            <th>Department</th>
+            <th>Leave type</th>
+            <th>Days</th>
+            <th>Dates</th>
+            <th>Reason</th>
+            <th>Applied</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {% for r in leave_requests %}
+          <tr>
+
+            <td class="fw-semibold">{{ r.employee.name }}</td>
+            <td>{{ r.employee.department }}</td>
+            <td>{{ r.leave_type }}</td>
+            <td>{{ r.total_days }}</td>
+            <td>{{ r.start_date }} → {{ r.end_date }}</td>
+
+            <td style="max-width:250px;">
+              {{ r.reason|default:"-" }}
+            </td>
+
+            <td>{{ r.applied_at|date:"d M Y, h:i A" }}</td>
+
+            <td>
+              {% if r.status == "PENDING" %}
+                <span class="badge bg-warning text-dark">Pending</span>
+              {% elif r.status == "APPROVED" %}
+                <span class="badge bg-success">Approved</span>
+              {% else %}
+                <span class="badge bg-danger">Rejected</span>
+              {% endif %}
+            </td>
+
+            <!-- ACTIONS -->
+            {% if viewer_role == "HR" %}
+            <td>
+              {% if r.status == "PENDING" %}
+              <div class="d-flex gap-1">
+                <a href="{% url 'approve_leave' r.id %}?next={{ request.path }}"
+                   class="btn btn-success btn-sm btn-action">
+                   Approve
+                </a>
+
+                <a href="{% url 'reject_leave' r.id %}?next={{ request.path }}"
+                   class="btn btn-danger btn-sm btn-action">
+                   Reject
+                </a>
+              </div>
+              {% else %}
+                <span class="text-muted">—</span>
+              {% endif %}
+            </td>
+
+            {% else %}
+            <td>
+              {% if r.status == "PENDING" %}
+                <a href="{% url 'update_leave' leave_id=r.id %}"
+                   class="btn btn-warning btn-sm btn-action">
+                   Update
+                </a>
+              {% else %}
+                <span class="text-muted">—</span>
+              {% endif %}
+            </td>
+            {% endif %}
+
+          </tr>
+          {% endfor %}
+        </tbody>
+
+      </table>
+
+      {% include "components/TableControls.html" with table_id="MyLeaveRequests" %}
+
+    </div>
+
+    {% else %}
+    <p class="text-muted mb-0">No leave requests yet.</p>
+    {% endif %}
+
+  </div>
+</div>
+
+<script>
+initTableControls("MyLeaveRequests", 5);
+</script>
+
+{% endblock %}

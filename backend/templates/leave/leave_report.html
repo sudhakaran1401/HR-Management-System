@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+{% block content %}
+
+{% load static %}
+
+<!-- HEADER -->
+<div class="page-header d-flex justify-content-between align-items-center">
+  <h4 class="mb-0 fw-bold">Leave Report</h4>
+</div>
+
+<div class="container mt-4">
+
+  <!-- FILTER (UNCHANGED LOGIC) -->
+
+<div class="card shadow-sm mb-3">
+  <div class="card-body">
+    {% include "components/report_filter.html" %}
+  </div>
+</div>
+
+  <!-- EMPTY STATE -->
+  {% if not request.GET.month and not request.GET.year and not request.GET.employee %}
+  <div class="card shadow-sm mb-3">
+    <div class="card-body text-center text-muted">
+      Use the filters above to generate a report.
+    </div>
+  </div>
+  {% endif %}
+
+  {% if filter_applied %}
+
+  <!-- KPI CARDS (ONLY STYLE CHANGED) -->
+  <div class="row mt-3 g-3">
+
+    <div class="col-md-3">
+      <div class="card shadow-sm kpi-card">
+        <div class="card-body">
+          <div class="text-muted">Total Applied</div>
+          <div class="kpi-value text-primary">{{ total }}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="card shadow-sm kpi-card">
+        <div class="card-body">
+          <div class="text-muted">Approved</div>
+          <div class="kpi-value text-success">{{ approved }}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="card shadow-sm kpi-card">
+        <div class="card-body">
+          <div class="text-muted">Pending</div>
+          <div class="kpi-value text-warning">{{ pending }}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="card shadow-sm kpi-card">
+        <div class="card-body">
+          <div class="text-muted">Rejected</div>
+          <div class="kpi-value text-danger">{{ rejected }}</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- CHART -->
+  <div class="card shadow-sm mt-4 kpi-card">
+    <div class="card-body">
+      <h5>Leave Requests</h5>
+      <div class="chart-container">
+        <canvas id="leaveChart" 
+          data-approved="{{ approved|default:'0' }}"
+          data-pending="{{ pending|default:'0' }}"
+          data-rejected="{{ rejected|default:'0' }}">
+       </canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- TABLE (LOGIC UNCHANGED) -->
+  <div class="card shadow-sm mt-4">
+    <div class="card-body">
+
+      <div class="table-responsive">
+        <table class="table align-middle" id="LeaveReportTable" data-pagination="report" data-rows="5">
+
+          <thead>
+            <tr>
+              <th>Employee</th>
+              <th>Department</th>
+              <th>Leave type</th>
+              <th>Days</th>
+              <th>Dates</th>
+              <th>Reason</th>
+              <th>Applied</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {% if leave_requests %}
+              {% for r in leave_requests %}
+              <tr>
+                <td class="fw-semibold">{{ r.employee.name }}</td>
+                <td>{{ r.employee.department }}</td>
+                <td>{{ r.leave_type }}</td>
+                <td>{{ r.total_days }}</td>
+                <td>{{ r.start_date }} → {{ r.end_date }}</td>
+                <td style="max-width: 300px;">{{ r.reason|default:"-" }}</td>
+                <td>{{ r.applied_at|date:"d M Y, h:i A" }}</td>
+
+                <td>
+                  {% if r.status == "APPROVED" %}
+                    <span class="badge bg-success">Approved</span>
+                  {% elif r.status == "PENDING" %}
+                    <span class="badge bg-warning text-dark">Pending</span>
+                  {% else %}
+                    <span class="badge bg-danger">Rejected</span>
+                  {% endif %}
+                </td>
+
+              </tr>
+              {% endfor %}
+            {% else %}
+              <tr>
+                <td colspan="8" class="text-center text-muted">
+                  No leave records found.
+                </td>
+              </tr>
+            {% endif %}
+          </tbody>
+
+        </table>
+
+        {% include "components/TableControls.html" with table_id="LeaveReportTable" %}
+      </div>
+
+    </div>
+  </div>
+
+  {% endif %}
+
+</div>
+
+<!-- CHART JS (UNCHANGED LOGIC) -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+{% if filter_applied %}
+<script src="{% static 'js/leave_report.js' %}"></script>
+{% endif %}
+
+{% endblock %}

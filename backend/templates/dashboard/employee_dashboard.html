@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+{% block content %}
+
+{% load static %}
+<!-- HEADER -->
+<div class="dashboard-header d-flex justify-content-between align-items-center mb-3">
+
+  <h4 class="mb-0 fw-bold">Employee Dashboard</h4>
+
+  {% include "components/toggle.html" %}
+
+  {% include "components/dashboard_filter.html" with reset_url=employee_dashboard_url %}
+</div>
+
+{% if profile %}
+
+<!-- KPI CARDS -->
+<div class="row g-4 mb-4">
+
+  <div class="col-md-3 kpi-card">
+    <div class="card shadow-sm h-100">
+      <div class="card-body d-flex flex-column justify-content-between h-100">
+        <div>
+          <div class="metric-label">Worked Days</div><br>
+          <div class="text-success h4">{{ my_attendance_month }}</div>
+        </div>
+        <a class="btn btn-outline-primary btn-sm w-100 mt-3 btn-modern"
+           href="{% url 'attendance_calendar' %}">View</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-3 kpi-card">
+    <div class="card shadow-sm h-100">
+      <div class="card-body d-flex flex-column justify-content-between h-100">
+        <div>
+          <div class="metric-label">Leave Balance</div><br>
+          <div class="text-warning h4">{{ leave_balance }}</div>
+        </div>
+        <a class="btn btn-outline-primary btn-sm w-100 mt-3 btn-modern"
+           href="{% url 'leave_balance' %}">View</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-3 kpi-card">
+    <div class="card shadow-sm h-100">
+      <div class="card-body d-flex flex-column justify-content-between h-100">
+        <div>
+          <div class="metric-label">Latest Salary</div><br>
+          <div class="text-primary h4">
+            {% if latest_salary %}{{ latest_salary.net_pay }}{% else %}0{% endif %}
+          </div>
+        </div>
+        <a class="btn btn-outline-primary btn-sm w-100 mt-3 btn-modern"
+           href="{% url 'employee_salary_history' %}">View</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-3 kpi-card">
+    <div class="card shadow-sm h-100">
+      <div class="card-body d-flex flex-column justify-content-between h-100">
+        <div>
+          <div class="metric-label">Payroll Count</div><br>
+          <div class="text-dark h4">{{ salary_count }}</div>
+        </div>
+        <a class="btn btn-outline-primary btn-sm w-100 mt-3 btn-modern"
+           href="{% url 'employee_salary_history' %}">View</a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- SECOND ROW -->
+<div class="row g-4">
+
+  <!-- PROFILE -->
+  <div class="col-md-4 kpi-card">
+    <div class="card shadow-sm h-100">
+      <div class="card-body">
+        <h5 class="chart-title">My Profile</h5>
+        <br>
+        <p><b>Name:</b> {{ profile.employee.name }}</p>
+        <p><b>Email:</b> {{ profile.employee.email }}</p>
+        <p><b>Department:</b> {{ profile.employee.department }}</p>
+        <p><b>Designation:</b> {{ profile.employee.designation }}</p>
+
+        <a class="btn btn-outline-secondary btn-sm mt-2"
+           href="{% url 'my_profile' %}">
+          View Profile
+        </a>
+      </div>
+    </div>
+  </div>
+
+  {{ attendance_month_labels|json_script:"attendance-month-labels" }}
+  {{ attendance_month_data|json_script:"attendance-month-data" }}
+
+  <!-- ATTENDANCE CHART -->
+  <div class="col-md-4 kpi-card">
+    <div class="card shadow-sm h-100">
+      <div class="card-body">
+        <h5 class="chart-title">Worked Days</h5>
+        <div class="chart-container">
+          <canvas id="attendanceChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {{ payroll_month_labels|json_script:"payroll-month-labels" }}
+  {{ payroll_month_data|json_script:"payroll-month-data" }}
+
+  <!-- PAYROLL CHART -->
+  <div class="col-md-4 kpi-card">
+    <div class="card shadow-sm h-100">
+      <div class="card-body">
+        <h5 class="chart-title">Payroll</h5>
+        <div class="chart-container">
+          <canvas id="payrollChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+{% else %}
+<div class="alert alert-warning">
+  No EmployeeProfile linked. Contact HR.
+</div>
+{% endif %}
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{% static 'js/emp_dashboard_charts.js'%}"></script>
+
+
+{% endblock %}

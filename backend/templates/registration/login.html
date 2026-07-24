@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+body {
+  background: var(--bg-main);
+}
+
+/* CARD */
+.login-card {
+  border-radius: 16px;
+  border: none;
+  backdrop-filter: blur(10px);
+}
+
+/* HEADER */
+.login-header {
+  background: linear-gradient(135deg, #0d6efd, #4f9cff);
+  color: white;
+  border-radius: 16px 16px 0 0;
+  padding: 20px;
+  text-align: center;
+}
+
+/* INPUT */
+.form-control {
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 14px;
+}
+
+.form-control:focus {
+  box-shadow: 0 0 0 2px rgba(13,110,253,0.2);
+  border-color: #0d6efd;
+}
+
+/* BUTTON */
+.btn-login {
+  border-radius: 8px;
+  padding: 10px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.btn-login:hover {
+  transform: scale(1.02);
+}
+
+/* LINK */
+.back-link {
+  font-size: 14px;
+  color: #6c757d;
+}
+
+.back-link:hover {
+  color: #0d6efd;
+}
+</style>
+
+<div class="container">
+<div class="row justify-content-center align-items-center" style="min-height: 90vh;">
+
+<div class="col-md-5">
+
+  <div class="card shadow-lg login-card">
+
+    <!-- HEADER -->
+    <div class="login-header">
+      <h4 class="mb-0 fw-bold">Employee Management System</h4>
+    </div>
+
+    <div class="card-body p-4">
+
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-danger text-center">
+            {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+
+      <form method="post">
+        {% csrf_token %}
+
+        <div class="mb-3">
+          <label class="form-label">Username</label>
+          <input type="text" name="username" class="form-control" placeholder="Enter username" required>
+        </div>
+
+        <div class="mb-4">
+          <label class="form-label">Password</label>
+          <input type="password" name="password" class="form-control" placeholder="Enter password" required>
+        </div>
+
+        <div class="d-grid mb-3">
+          <button type="submit" class="btn btn-primary btn-login">
+            Login
+          </button>
+        </div>
+
+        <div class="text-center">
+          <a href="{% url 'home' %}" class="text-decoration-none back-link">
+            ← Back to Home
+          </a>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+
+</div>
+
+</div>
+</div>
+
+{% endblock %}

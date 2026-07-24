@@ -1,0 +1,725 @@
+/* ==========================================================
+   GLOBAL
+========================================================== */
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", sans-serif;
+  background: var(--bg-gradient);
+  color: var(--text-color);
+  transition:
+    background var(--transition),
+    color var(--transition);
+}
+
+body {
+    padding-top: 65px; 
+}
+
+/* ==========================================================
+   THEME TOGGLE
+========================================================== */
+
+.theme-toggle {
+  display: flex;
+  align-items: center;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 48px;
+  height: 24px;
+}
+
+.switch input {
+  display: none;
+}
+
+.slider {
+  position: absolute;
+  inset: 0;
+  cursor: pointer;
+  background: #6c757d;
+  transition: var(--transition);
+  border-radius: 50px;
+}
+
+.slider::before {
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  left: 3px;
+  bottom: 3px;
+  border-radius: 50%;
+  background: #fff;
+  transition: var(--transition);
+  box-shadow: 0 2px 8px rgba(0,0,0,.15);
+}
+
+input:checked + .slider {
+  background: linear-gradient(
+    135deg,
+    var(--primary),
+    var(--primary-light)
+  );
+}
+
+input:checked + .slider::before {
+  transform: translateX(24px);
+}
+
+/* ==========================================================
+   NAVBAR
+========================================================== */
+
+.navbar {
+  min-height: 65px;
+  background: var(--navbar-bg) !important;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition);
+}
+
+.navbar-brand {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: .3px;
+}
+
+.navbar-nav .nav-link {
+  transition: .25s ease;
+  border-radius: 8px;
+  padding: .55rem .9rem;
+}
+
+.navbar-nav .nav-link:hover {
+  background: rgba(255,255,255,.08);
+}
+
+.navbar .dropdown-toggle::after {
+  margin-left: 8px;
+}
+
+.navbar .dropdown-menu {
+  min-width: 220px;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-md);
+}
+
+.navbar .dropdown-item {
+  padding: 11px 18px;
+  transition: .25s ease;
+}
+
+.navbar .dropdown-item:hover {
+  background: linear-gradient(
+    135deg,
+    var(--primary),
+    var(--primary-light)
+  );
+  color: #fff;
+}
+
+.main-content {
+    padding-top: 75px;
+}
+
+/* ==========================================================
+   CARDS
+========================================================== */
+
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition);
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Dashboard Cards */
+
+.dashboard-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.dashboard-card::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 4px;
+
+  background: linear-gradient(
+    90deg,
+    var(--primary),
+    var(--primary-light)
+  );
+}
+
+.dashboard-card:hover {
+  transform: translateY(-4px);
+}
+
+/* ==========================================================
+   TABLES
+========================================================== */
+
+.table,
+.table td,
+.table th {
+  vertical-align: middle;
+}
+
+.table {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.table thead th {
+  background: linear-gradient(
+    180deg,
+    #ffffff,
+    #f2f7fd
+  );
+  border-bottom: 1px solid var(--border-color);
+  font-weight: 600;
+}
+
+.table tbody tr {
+  transition: .2s ease;
+}
+
+.table tbody tr:hover {
+  background: rgba(13,110,253,.04);
+}
+
+/* ==========================================================
+   BUTTONS
+========================================================== */
+
+.btn {
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all var(--transition);
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-primary {
+  background: linear-gradient(
+    135deg,
+    var(--primary),
+    var(--primary-light)
+  );
+  border: none;
+}
+
+.btn-success {
+  background: linear-gradient(
+    135deg,
+    var(--success),
+    var(--success-light)
+  );
+  border: none;
+}
+
+.btn-danger {
+  background: linear-gradient(
+    135deg,
+    var(--danger),
+    var(--danger-light)
+  );
+  border: none;
+}
+
+.btn-warning {
+  background: linear-gradient(
+    135deg,
+    var(--warning),
+    var(--warning-light)
+  );
+  border: none;
+  color: #222;
+}
+
+.btn-info {
+  background: linear-gradient(
+    135deg,
+    var(--info),
+    var(--info-light)
+  );
+  border: none;
+}
+/* ==========================================================
+   FORMS
+========================================================== */
+
+.form-control,
+.form-select {
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  background: rgba(255,255,255,.92);
+  transition: all var(--transition);
+}
+
+.form-control:hover,
+.form-select:hover {
+  border-color: var(--primary-light);
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--primary);
+  background: #fff;
+  box-shadow: 0 0 0 .18rem rgba(13,110,253,.15);
+}
+
+.form-control::placeholder {
+  color: #98a2b3;
+}
+
+/* ==========================================================
+   INPUT GROUP
+========================================================== */
+
+.input-group-text {
+  background: linear-gradient(
+    180deg,
+    #ffffff,
+    #f6f9fc
+  );
+  border-color: var(--border-color);
+  color: var(--text-color);
+}
+
+/* ==========================================================
+   DARK MODE
+========================================================== */
+
+body.dark-mode {
+  background: var(--bg-gradient) !important;
+  color: var(--text-color) !important;
+}
+
+/* Navbar */
+
+body.dark-mode .navbar {
+  background: var(--navbar-bg) !important;
+}
+
+/* Cards */
+
+body.dark-mode .card {
+  background: var(--card-bg);
+  color: #fff;
+  border-color: #343434;
+  box-shadow: var(--shadow-md);
+}
+
+/* Forms */
+
+body.dark-mode .form-control,
+body.dark-mode .form-select {
+  background: #2b2b2b;
+  color: #fff;
+  border-color: #444;
+}
+
+body.dark-mode .form-control:hover,
+body.dark-mode .form-select:hover {
+  border-color: var(--primary-light);
+}
+
+body.dark-mode .form-control:focus,
+body.dark-mode .form-select:focus {
+  background: #323232;
+  color: #fff;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 .18rem rgba(77,148,255,.18);
+}
+
+body.dark-mode .form-control::placeholder {
+  color: #9ca3af;
+}
+
+body.dark-mode label,
+body.dark-mode .form-label {
+  color: #f1f3f5;
+}
+
+/* Input Group */
+
+body.dark-mode .input-group-text {
+  background: linear-gradient(
+    180deg,
+    #2b2b2b,
+    #343434
+  );
+  border-color: #444;
+  color: #fff;
+}
+
+/* Dropdown */
+
+body.dark-mode .dropdown-menu {
+  background: #232323;
+  border-color: #3a3a3a;
+}
+
+body.dark-mode .dropdown-item {
+  color: #fff;
+}
+
+body.dark-mode .dropdown-item:hover {
+  background: linear-gradient(
+    135deg,
+    var(--primary),
+    var(--primary-light)
+  );
+}
+
+/* ==========================================================
+   TABLES
+========================================================== */
+
+body.dark-mode .table {
+  --bs-table-bg: transparent;
+  --bs-table-color: #fff;
+  --bs-table-border-color: #3d3d3d;
+  --bs-table-striped-bg: #252525;
+  --bs-table-hover-bg: #303030;
+}
+
+body.dark-mode .table thead th {
+  background: linear-gradient(
+    180deg,
+    #272727,
+    #1f1f1f
+  ) !important;
+
+  color: #fff;
+  border-color: #3d3d3d;
+}
+
+body.dark-mode .table td,
+body.dark-mode .table th {
+  border-color: #3d3d3d;
+}
+
+body.dark-mode .table tbody tr:hover {
+  background: rgba(77,148,255,.08);
+}
+
+/* ==========================================================
+   BUTTONS
+========================================================== */
+
+body.dark-mode .btn-outline-secondary {
+  color: #dee2e6;
+  border-color: #6c757d;
+}
+
+body.dark-mode .btn-outline-secondary:hover {
+  background: linear-gradient(
+    135deg,
+    #5b6167,
+    #737b84
+  );
+  color: #fff;
+}
+
+/* ==========================================================
+   LINKS
+========================================================== */
+
+body.dark-mode a {
+  color: #9cc2ff;
+}
+
+/* ==========================================================
+   TEXT
+========================================================== */
+
+body.dark-mode .text-muted,
+body.dark-mode .text-body-secondary {
+  color: #cfd4da !important;
+}
+
+body.dark-mode .text-dark,
+body.dark-mode .text-body,
+body.dark-mode .text-black {
+  color: #fff !important;
+}
+
+body.dark-mode .text-secondary {
+  color: #adb5bd !important;
+}
+
+/* ==========================================================
+   DASHBOARD
+========================================================== */
+
+.dashboard-card {
+  transition: all var(--transition);
+}
+
+.dashboard-card:hover {
+  transform: translateY(-4px);
+}
+
+.chart-container {
+  position: relative;
+  width: 100%;
+  min-height: 320px;
+}
+
+/* ==========================================================
+   EXPORT BUTTONS
+========================================================== */
+
+.btn-group .btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+body.dark-mode .btn-group .btn-light {
+  background: linear-gradient(
+    135deg,
+    #343a40,
+    #495057
+  );
+  border-color: #495057;
+  color: #fff;
+}
+/* ==========================================================
+   PAGINATION
+========================================================== */
+
+.pagination,
+.pagination * {
+  user-select: none;
+}
+
+.page-item .page-link {
+  border-radius: 8px;
+  margin: 0 3px;
+  border: 1px solid var(--border-color);
+  color: var(--text-color);
+  transition: all var(--transition);
+}
+
+.page-item.active .page-link {
+  background: linear-gradient(
+    135deg,
+    var(--primary),
+    var(--primary-light)
+  );
+  border-color: transparent;
+  color: #fff;
+}
+
+.page-item .page-link:hover {
+  background: rgba(13,110,253,.08);
+  border-color: var(--primary-light);
+}
+
+body.dark-mode .page-item .page-link {
+  background: #232323;
+  color: #fff;
+  border-color: #3d3d3d;
+}
+
+body.dark-mode .page-item .page-link:hover {
+  background: rgba(77,148,255,.12);
+}
+
+/* ==========================================================
+   BADGES
+========================================================== */
+
+.badge {
+  font-weight: 600;
+  letter-spacing: .25px;
+  border-radius: 30px;
+  padding: .45rem .8rem;
+}
+
+.bg-success,
+.badge.bg-success {
+  background: linear-gradient(
+    135deg,
+    var(--success),
+    var(--success-light)
+  ) !important;
+}
+
+.bg-danger,
+.badge.bg-danger {
+  background: linear-gradient(
+    135deg,
+    var(--danger),
+    var(--danger-light)
+  ) !important;
+}
+
+.bg-warning,
+.badge.bg-warning {
+  background: linear-gradient(
+    135deg,
+    var(--warning),
+    var(--warning-light)
+  ) !important;
+  color: #222 !important;
+}
+
+.bg-info,
+.badge.bg-info {
+  background: linear-gradient(
+    135deg,
+    var(--info),
+    var(--info-light)
+  ) !important;
+  color: #111 !important;
+}
+
+.bg-primary,
+.badge.bg-primary {
+  background: linear-gradient(
+    135deg,
+    var(--primary),
+    var(--primary-light)
+  ) !important;
+}
+
+/* ==========================================================
+   IMAGES
+========================================================== */
+
+img {
+  max-width: 100%;
+  height: auto;
+  transition: transform var(--transition);
+}
+
+.card img:hover {
+  transform: scale(1.02);
+}
+
+/* ==========================================================
+   SCROLLBAR
+========================================================== */
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(120,120,120,.45);
+  border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(120,120,120,.7);
+}
+
+body.dark-mode::-webkit-scrollbar-thumb {
+  background: #4a4a4a;
+}
+
+body.dark-mode::-webkit-scrollbar-thumb:hover {
+  background: #666;
+}
+
+/* ==========================================================
+   TRANSITIONS
+========================================================== */
+
+.card,
+.table,
+.form-control,
+.form-select,
+.btn,
+.dropdown-menu,
+.navbar,
+.badge,
+.page-link,
+.input-group-text {
+  transition:
+    background-color var(--transition),
+    color var(--transition),
+    border-color var(--transition),
+    box-shadow var(--transition),
+    transform var(--transition);
+}
+
+/* ==========================================================
+   FOCUS
+========================================================== */
+
+.form-control:focus,
+.form-select:focus,
+.btn:focus,
+.btn:active:focus,
+.page-link:focus {
+  outline: none;
+  box-shadow: 0 0 0 .18rem rgba(13,110,253,.18);
+}
+
+body.dark-mode .form-control:focus,
+body.dark-mode .form-select:focus,
+body.dark-mode .btn:focus,
+body.dark-mode .page-link:focus {
+  box-shadow: 0 0 0 .18rem rgba(77,148,255,.18);
+}
+
+/* ==========================================================
+   SELECTION
+========================================================== */
+
+::selection {
+  background: var(--primary);
+  color: #fff;
+}
+
+/* ==========================================================
+   DARK MODE DATE/TIME PICKER
+========================================================== */
+
+body.dark-mode .form-select {
+  background-color: #2b2b2b !important;
+  color: #fff !important;
+  border: 1px solid #444 !important;
+  appearance: none;
+  -webkit-appearance: none;
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 18px;
+}
+
+body.dark-mode input[type="date"]::-webkit-calendar-picker-indicator,
+body.dark-mode input[type="time"]::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+}
+
+/* ==========================================================
+   END OF FILE
+========================================================== */

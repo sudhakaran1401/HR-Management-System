@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container">
+<div class="row justify-content-center align-items-center" style="min-height: 70vh;">
+
+<div class="col-md-5">
+
+  <div class="card shadow-lg delete-card">
+
+    <!-- HEADER -->
+    <div class="delete-header">
+      <h5 class="mb-0 fw-bold">Confirm Deletion</h5>
+    </div>
+
+    <!-- BODY -->
+    <div class="card-body text-center">
+
+      <p class="mb-3 text-muted">
+        Are you sure you want to delete
+      </p>
+
+      <h5 class="text-danger fw-bold mb-4">
+        {{ employee.name }} ?
+      </h5>
+
+      <form method="POST">
+        {% csrf_token %}
+
+        <div class="d-flex justify-content-center gap-3">
+
+          <button class="btn btn-danger">
+            Yes, Delete
+          </button>
+
+          <a href="/" class="btn btn-outline-secondary">
+            Cancel
+          </a>
+
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+</div>
+
+</div>
+</div>
+
+{% endblock %}

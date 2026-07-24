@@ -1,0 +1,41 @@
+
+<!-- ✅ HTML -->
+<div class="theme-toggle-wrapper d-flex align-items-center ms-3">
+
+  <i class="bi bi-sun-fill text-warning"></i>
+
+  <label class="custom-switch">
+  <input type="checkbox" id="themeToggle" class="form-check-input">
+  <span class="slider"></span>
+  </label>
+
+  <i class="bi bi-moon-fill text-white"></i>
+
+</div>
+
+<!-- ✅ JS -->
+<script>
+(function () {
+
+  const toggle = document.getElementById("themeToggle");
+  if (!toggle) return;
+
+  const saved = localStorage.getItem("theme") || "light";
+
+  if (saved === "dark") {
+    document.body.classList.add("dark-mode");
+    toggle.checked = true;
+  }
+
+  toggle.addEventListener("change", function () {
+    if (this.checked) {
+      document.body.classList.add("dark-mode");
+      localStorage.setItem("theme", "dark");
+    } else {
+      document.body.classList.remove("dark-mode");
+      localStorage.setItem("theme", "light");
+    }
+  });
+
+})();
+</script>

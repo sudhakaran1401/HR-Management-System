@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-- HEADER -->
+<div class="page-header d-flex justify-content-between align-items-center">
+  <h4 class="mb-0 fw-bold">Employees</h4>
+
+  <a class="btn btn-success btn-action text-white"
+     href="{% url 'employee_create_canonical' %}">
+     + Add Employee
+  </a>
+</div>
+
+<!-- CARD -->
+<div class="card shadow-sm table-card">
+  <div class="card-body">
+
+    <!-- SEARCH -->
+    <input id="globalSearch" class="form-control search-box mb-3"
+           placeholder="Search employees...">
+
+    {% include "components/LiveSearch.html" %}
+
+    <!-- TABLE -->
+    <div class="table-responsive">
+      <table class="table align-middle" id="employeeTable">
+
+        <thead>
+          <tr>
+            <th></th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Department</th>
+            <th>Designation</th>
+            <th>Joining Date</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+        {% for e in employees %}
+          <tr>
+            <td>
+              {% if e.photo %}
+                <img src="{{ e.photo.url }}" class="avatar">
+              {% else %}
+                <span class="text-muted">-</span>
+              {% endif %}
+            </td>
+
+            <td class="fw-semibold">{{ e.name }}</td>
+            <td>{{ e.email }}</td>
+            <td>{{ e.phone }}</td>
+            <td>{{ e.department }}</td>
+            <td>{{ e.designation }}</td>
+            <td>{{ e.joining_date }}</td>
+
+            <td>
+              <div class="d-flex flex-wrap gap-1">
+
+                <a class="btn btn-info btn-sm btn-action"
+                   href="{% url 'employee_detail' e.id %}">
+                   View
+                </a>
+
+                <a class="btn btn-warning btn-sm btn-action"
+                   href="{% url 'employee_update' e.id %}">
+                   Edit
+                </a>
+
+                <a class="btn btn-danger btn-sm btn-action"
+                   href="{% url 'employee_delete' e.id %}">
+                   Delete
+                </a>
+
+                <a class="btn btn-primary btn-sm btn-action"
+                   href="{% url 'mark_attendance_by_hr' e.id %}">
+                   Attendance
+                </a>
+
+              </div>
+            </td>
+          </tr>
+
+        {% empty %}
+          <tr>
+            <td colspan="8" class="text-center text-muted">
+              No employees found.
+            </td>
+          </tr>
+        {% endfor %}
+        </tbody>
+
+      </table>
+
+      {% include "components/TableControls.html" with table_id="employeeTable" %}
+    </div>
+
+  </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  initTableControls("employeeTable", 5);
+});
+</script>
+
+{% endblock %}

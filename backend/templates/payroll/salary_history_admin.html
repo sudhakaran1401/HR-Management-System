@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+{% block content %}
+
+{% load static %}
+
+<!-- HEADER -->
+<div class="page-header d-flex justify-content-between align-items-center">
+  <h4 class="mb-0 fw-bold">Payroll Report</h4>
+
+  <a class="btn btn-success btn-sm" href="{% url 'create_salary' %}">
+    + Add Payroll
+  </a>
+</div>
+
+<!-- FILTER -->
+<div class="card shadow-sm mb-3">
+  <div class="card-body">
+    {% include "components/report_filter.html" %}
+  </div>
+</div>
+<!-- EMPTY -->
+{% if not request.GET.month and not request.GET.year and not request.GET.employee %}
+<div class="card shadow-sm mb-3">
+  <div class="card-body text-center text-muted">
+    Use the filters above to generate a report.
+  </div>
+</div>
+{% endif %}
+
+{% if filter_applied %}
+
+<!-- CHART -->
+<div class="card shadow-sm mb-3 kpi-card">
+  <div class="card-body">
+    <h5 class="mb-3">Salary Chart</h5>
+    <div class="chart-container">
+      <canvas id="salaryChart"  data-url="{% url 'salary_chart_api' %}"></canvas>
+    </div>
+  </div>
+</div>
+
+<!-- TABLE -->
+<div class="card shadow-sm">
+  <div class="card-body">
+
+    <div class="table-responsive">
+      <table class="table align-middle" id="SalaryAdminTable" data-pagination="report" data-rows="5">
+
+        <thead>
+          <tr>
+            <th>Employee</th>
+            <th>Month</th>
+            <th>Gross</th>
+            <th>Deductions</th>
+            <th>Net Pay</th>
+            <th>Paid Date</th>
+            <th class="text-end">Payslip</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {% if rows %}
+            {% for r in rows %}
+            <tr>
+
+              <td class="fw-semibold">{{ r.employee.name }}</td>
+              <td>{{ r.pay_month|date:"M Y" }}</td>
+              <td>{{ r.gross }}</td>
+              <td>{{ r.total_deductions }}</td>
+
+              <td><b>{{ r.net_pay }}</b></td>
+
+              <td>{{ r.paid_date|date:"d M Y"|default_if_none:"-" }}</td>
+
+              <td class="text-end">
+                <div class="d-flex justify-content-end gap-1">
+
+                  <a class="btn btn-outline-primary btn-sm"
+                     href="{% url 'hr_payslip_view' r.id %}">
+                     View
+                  </a>
+
+                  <a class="btn btn-outline-secondary btn-sm download-btn"
+                     href="{% url 'payslip_pdf' r.id %}"
+                     data-message="Payslip downloaded successfully">
+                     PDF
+                  </a>
+
+                </div>
+              </td>
+
+            </tr>
+            {% endfor %}
+          {% else %}
+            <tr>
+              <td colspan="7" class="text-center text-muted">
+                No payroll records.
+              </td>
+            </tr>
+          {% endif %}
+        </tbody>
+
+      </table>
+
+      {% include "components/TableControls.html" with table_id="SalaryAdminTable" %}
+    </div>
+
+  </div>
+</div>
+
+{% endif %}
+
+<!-- CHART JS (UNCHANGED LOGIC) -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{% static 'js/salary_report.js'%}"></script>
+
+{% endblock %}

@@ -1,0 +1,62 @@
+{% if is_hr %}
+<div class="d-flex justify-content-end mb-3">
+
+  <div class="toggle-wrapper px-3 py-2 d-flex align-items-center gap-2">
+
+    <span id="labelHR" class="toggle-label fw-semibold">HR</span>
+
+    <label class="custom-switch m-0">
+    <input type="checkbox" id="dashboardToggle">
+    <span class="slider"></span>
+    </label>
+
+    <span id="labelEmp" class="toggle-label fw-semibold text-muted">Employee</span>
+
+  </div>
+
+</div>
+{% endif %}
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const toggle = document.getElementById("dashboardToggle");
+    const labelHR = document.getElementById("labelHR");
+    const labelEmp = document.getElementById("labelEmp");
+
+    if (!toggle) return;
+
+    // ✅ Load saved mode
+    const savedMode = localStorage.getItem("dashboard_mode") || "hr";
+
+    // Set toggle state
+    toggle.checked = (savedMode === "employee");
+
+    updateLabels(toggle.checked);
+
+    // ✅ On toggle change
+    toggle.addEventListener("change", function () {
+
+        if (this.checked) {
+            localStorage.setItem("dashboard_mode", "employee");
+            window.location.href = "/me/dashboard/";
+        } else {
+            localStorage.setItem("dashboard_mode", "hr");
+            window.location.href = "/hr/dashboard/";
+        }
+
+    });
+
+    // 🔥 Update label styles
+    function updateLabels(isEmployee) {
+        if (isEmployee) {
+            labelHR.classList.add("text-muted");
+            labelEmp.classList.remove("text-muted");
+        } else {
+            labelHR.classList.remove("text-muted");
+            labelEmp.classList.add("text-muted");
+        }
+    }
+
+});
+</script>

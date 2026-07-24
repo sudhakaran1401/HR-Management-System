@@ -1,0 +1,295 @@
+/* ==========================================================
+   RESET
+========================================================== */
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ==========================================================
+   DESIGN SYSTEM
+========================================================== */
+
+:root {
+
+  /* ========================
+     BRAND COLORS
+  ======================== */
+
+  --primary: #0d6efd;
+  --primary-light: #4f9cff;
+  --primary-dark: #0b5ed7;
+
+  --success: #198754;
+  --success-light: #4caf50;
+
+  --danger: #dc3545;
+  --danger-light: #f25f6c;
+
+  --warning: #ffc107;
+  --warning-light: #ffd95a;
+
+  --info: #0dcaf0;
+  --info-light: #63dfff;
+
+  /* ========================
+     LIGHT THEME
+  ======================== */
+
+  --bg-color: #f8f9fa;
+  --bg-gradient:
+    linear-gradient(
+      180deg,
+      #ffffff 0%,
+      #f8f9fa 55%,
+      #eef4fb 100%
+    );
+
+  --card-bg:
+    linear-gradient(
+      145deg,
+      #ffffff,
+      #f8fbff
+    );
+
+  --card-solid: #ffffff;
+
+  --navbar-bg:
+    linear-gradient(
+      135deg,
+      #1d2733,
+      #212529,
+      #2d3748
+    );
+
+  --text-color: #212529;
+
+  --text-muted: #6c757d;
+
+  --border-color: #dee2e6;
+
+  /* ========================
+     SHADOWS
+  ======================== */
+
+  --shadow-xs:
+    0 2px 6px rgba(0,0,0,.05);
+
+  --shadow-sm:
+    0 4px 10px rgba(0,0,0,.08);
+
+  --shadow-md:
+    0 8px 24px rgba(0,0,0,.10);
+
+  --shadow-lg:
+    0 16px 40px rgba(0,0,0,.12);
+
+  /* ========================
+     RADIUS
+  ======================== */
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+
+  /* ========================
+     TRANSITIONS
+  ======================== */
+
+  --transition-fast: .2s ease;
+  --transition: .35s ease;
+  --transition-slow: .45s ease;
+}
+
+/* ==========================================================
+   DARK MODE
+========================================================== */
+
+body.dark-mode {
+
+  --bg-color: #121212;
+
+  --bg-gradient:
+    linear-gradient(
+      180deg,
+      #121212,
+      #181818,
+      #202124
+    );
+
+  --card-bg:
+    linear-gradient(
+      145deg,
+      #1f1f1f,
+      #262626
+    );
+
+  --card-solid: #1f1f1f;
+
+  --navbar-bg:
+    linear-gradient(
+      135deg,
+      #161616,
+      #1b1b1b,
+      #252525
+    );
+
+  --text-color: #f8f9fa;
+
+  --text-muted: #adb5bd;
+
+  --border-color: #3b3b3b;
+
+  --shadow-sm:
+    0 6px 18px rgba(0,0,0,.35);
+
+  --shadow-md:
+    0 12px 30px rgba(0,0,0,.45);
+
+  --shadow-lg:
+    0 20px 45px rgba(0,0,0,.55);
+}
+
+/* ==========================================================
+   GLOBAL
+========================================================== */
+
+html,
+body,
+#root {
+  width: 100%;
+  min-height: 100vh;
+}
+
+body {
+  font-family: "Segoe UI", sans-serif;
+  background: var(--bg-gradient);
+  color: var(--text-color);
+  transition:
+    background var(--transition),
+    color var(--transition);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* ==========================================================
+   LINKS
+========================================================== */
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--primary);
+}
+
+/* ==========================================================
+   IMAGES
+========================================================== */
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* ==========================================================
+   TABLES
+========================================================== */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+/* ==========================================================
+   BOOTSTRAP OVERRIDES
+========================================================== */
+
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  box-shadow: var(--shadow-sm);
+  transition:
+    transform var(--transition),
+    box-shadow var(--transition),
+    background var(--transition);
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+
+.navbar {
+  background: var(--navbar-bg) !important;
+}
+
+.navbar-brand,
+.nav-link {
+  color: #fff !important;
+}
+
+.dropdown-menu {
+  background: var(--card-solid);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  box-shadow: var(--shadow-md);
+}
+
+.dropdown-item {
+  color: var(--text-color);
+  transition: .25s ease;
+}
+
+.dropdown-item:hover {
+  background: linear-gradient(
+      135deg,
+      var(--primary),
+      var(--primary-light)
+  );
+  color: #fff;
+}
+
+/* ==========================================================
+   SCROLLBAR
+========================================================== */
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(120,120,120,.45);
+  border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(120,120,120,.65);
+}
+
+/* ==========================================================
+   SELECTION
+========================================================== */
+
+::selection {
+  background: var(--primary);
+  color: #fff;
+}
+
+/* ==========================================================
+   FOCUS
+========================================================== */
+
+:focus-visible {
+  outline: 2px solid var(--primary-light);
+  outline-offset: 2px;
+}

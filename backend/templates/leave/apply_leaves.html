@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-- HEADER -->
+<div class="page-header">
+  <h4 class="mb-0 fw-bold">
+    {% if is_update %}Update Leave{% else %}Apply Leave{% endif %}
+  </h4>
+</div>
+
+<div class="row justify-content-center">
+  <div class="col-md-6">
+
+    <div class="card shadow-sm form-card">
+      <div class="card-body p-4">
+
+        {% include "components/messages.html" %}
+
+        <form method="post">
+          {% csrf_token %}
+
+          <div class="mb-3">
+            <label class="form-label">Start Date</label>
+            {{ form.start_date }}
+            <div class="text-danger">{{ form.start_date.errors }}</div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">End Date</label>
+            {{ form.end_date }}
+            <div class="text-danger">{{ form.end_date.errors }}</div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Leave Type</label>
+            {{ form.leave_type }}
+            <div class="text-danger">{{ form.leave_type.errors }}</div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Reason</label>
+            {{ form.reason }}
+            <div class="text-danger">{{ form.reason.errors }}</div>
+          </div>
+
+          {% if form.non_field_errors %}
+            <div class="alert alert-danger">
+              {{ form.non_field_errors }}
+            </div>
+          {% endif %}
+
+          <!-- ACTIONS -->
+          <div class="d-flex justify-content-between mt-4">
+
+            <a class="btn btn-outline-secondary"
+               href="{% url 'my_leave_requests' %}">
+              My Requests
+            </a>
+
+            <button class="btn btn-primary" type="submit">
+              {% if is_update %}Update{% else %}Submit{% endif %}
+            </button>
+
+          </div>
+
+        </form>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}

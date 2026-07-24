@@ -1,0 +1,118 @@
+/*=============================THEME TOGGLE=============================*/
+
+/* ONLY toggle UI styles (safe) */
+.theme-toggle-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* SWITCH */
+.custom-switch {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 22px;
+}
+
+.custom-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+
+/* TRACK */
+.slider {
+  position: absolute;
+  inset: 0;
+  cursor: pointer;
+  background-color: #ccc;
+  border-radius: 50px;
+  transition: 0.3s;
+}
+
+/* KNOB */
+.slider::before {
+  content: "";
+  position: absolute;
+  height: 18px;
+  width: 18px;
+  left: 2px;
+  top: 2px;
+  background-color: white;
+  border-radius: 50%;
+  transition: 0.3s;
+}
+
+/* ACTIVE */
+.custom-switch input:checked + .slider {
+  background-color: var(--primary);
+}
+
+.custom-switch input:checked + .slider::before {
+  transform: translateX(22px);
+}
+
+/*=============================DOWNLOAD BUTTONS=============================*/
+.btn-group .btn {
+  border-radius: 0;
+}
+
+.btn-group .btn:first-child {
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+}
+
+.btn-group .btn:last-child {
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+/* center icon style */
+.btn-group span.btn {
+  background: #f8f9fa;
+  border-left: 0;
+  border-right: 0;
+}
+
+/*=============================TABLE PAGINATION=============================*/
+
+/* WRAPPER */
+.table-controls {
+  background: var(--card-bg);
+  padding: 10px 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+/* SELECT */
+.rows-select {
+  width: 90px;
+  height: 30px;
+  border-radius: 6px;
+  background: var(--card-bg);
+  color: var(--text-main);
+
+}
+
+.rows-select:focus {
+  box-shadow: 0 0 0 2px rgba(13,110,253,0.2);
+}
+
+/* BUTTONS */
+.btn{
+  padding: 6px;
+  font-size: 14px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+} 
+
+.has-navbar {
+    padding-top: 70px;
+}
