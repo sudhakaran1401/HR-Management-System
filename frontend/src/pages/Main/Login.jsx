@@ -3,8 +3,10 @@ import AlertMessage from "../../components/AlertMessage";
 import api from "../../services/api";
 import useAlert from "../../hooks/useAlert";
 import Navbar from "../../components/Navbar";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
+  const navigate = useNavigate();
   const { alert, showAlert, closeAlert } = useAlert();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -65,9 +67,9 @@ function Login() {
 
       setTimeout(() => {
         if (employee.department === "HR") {
-          window.location.href = "/hr/dashboard";
+          navigate("/hr/dashboard");
         } else {
-          window.location.href = "/me/dashboard";
+          navigate("/me/dashboard");
         }
       }, 1500);
 
