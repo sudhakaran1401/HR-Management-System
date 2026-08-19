@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-- HEADER -->
+<div class="page-header d-flex justify-content-between align-items-center">
+  <h4 class="mb-0 fw-bold">Leave Balance</h4>
+
+  {% if viewer_role == "EMPLOYEE" %}
+    <a class="btn btn-light btn-sm" href="{% url 'my_leave_requests' %}">
+      My Requests
+    </a>
+  {% endif %}
+</div>
+
+<p class="text-muted mb-3">
+  Employee: <strong>{{ employee }}</strong>
+</p>
+
+<!-- KPI CARDS -->
+<div class="row g-4">
+
+  <div class="col-md-3 kpi-card">
+    <div class="card shadow-sm metric-card p-3">
+      <div class="metric-label">Total Applied</div>
+      <div class="metric-value text-primary">{{ total }}</div>
+    </div>
+  </div>
+
+  <div class="col-md-3 kpi-card">
+    <div class="card shadow-sm metric-card p-3">
+      <div class="metric-label">Approved</div>
+      <div class="metric-value text-success">{{ approved }}</div>
+    </div>
+  </div>
+
+  <div class="col-md-3 kpi-card">
+    <div class="card shadow-sm metric-card p-3">
+      <div class="metric-label">Pending</div>
+      <div class="metric-value text-warning">{{ pending }}</div>
+    </div>
+  </div>
+
+  <div class="col-md-3 kpi-card">
+    <div class="card shadow-sm metric-card p-3">
+      <div class="metric-label">Rejected</div>
+      <div class="metric-value text-danger">{{ rejected }}</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- SUMMARY -->
+<div class="card shadow-sm summary-box mt-4 kpi-card">
+  <div class="card-body">
+
+    <h5 class="mb-3">Leave Taken Summary</h5>
+
+    <div class="summary-item">
+      <span class="h6">Sick Leaves</span>
+      <span class="badge bg-success badge-modern">
+        {{ sick_applied }}/{{ SICK_MAX }}
+      </span>
+    </div>
+
+    <div class="summary-item">
+      <span class="h6">Casual Leaves</span>
+      <span class="badge bg-warning text-dark badge-modern">
+        {{ casual_applied }}/{{ CASUAL_MAX }}
+      </span>
+    </div>
+
+    <div class="summary-item">
+      <span class="h6">Annual Leaves</span>
+      <span class="badge bg-info text-dark badge-modern">
+        {{ annual_applied }}/{{ ANNUAL_MAX }}
+      </span>
+    </div>
+
+    <div class="summary-item" style="border-bottom:none;">
+      <span class="h6">Total Leaves</span>
+      <span class="badge bg-danger badge-modern">
+        {{ total_applied }}/{{ TOTAL_MAX }}
+      </span>
+    </div>
+
+  </div>
+</div>
+
+<!-- ACTIONS -->
+<div class="mt-4 d-flex gap-2">
+
+  {% if viewer_role == "Employee" %}
+    <a href="{% url 'apply_leave' %}" class="btn btn-primary">
+      Apply Leave
+    </a>
+
+    <a href="{% url 'my_leave_requests' %}" class="btn btn-outline-primary">
+      Leave Requests
+    </a>
+
+  {% elif viewer_role == "HR" %}
+    <a href="{% url 'hr_employee_leave_requests' employee.id %}" class="btn btn-primary">
+      Leave Requests
+    </a>
+  {% endif %}
+
+</div>
+
+{% endblock %}

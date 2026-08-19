@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% block content %}
+
+{% load static %}
+
+<!-- HEADER -->
+<div class="page-header d-flex justify-content-between align-items-center">
+  <h4 class="mb-0 fw-bold">Employees Report</h4>
+</div>
+
+<!-- FILTER -->
+
+<div class="card shadow-sm mb-3">
+  <div class="card-body">
+    {% include "components/report_filter.html" %}
+  </div>
+</div>
+
+<!-- EMPTY STATE -->
+{% if not request.GET.month and not request.GET.year %}
+<div class="card shadow-sm mb-3">
+  <div class="card-body text-center text-muted">
+    Use the filters above to generate a report.
+  </div>
+</div>
+{% endif %}
+
+<!-- MAIN -->
+{% if filter_applied %}
+
+<!-- CHART -->
+<div class="card shadow-sm mb-3 kpi-card">
+  <div class="card-body">
+    <h5>Joining Chart</h5>
+    <div class="chart-container">
+      <canvas id="joinChart" data-url="{% url 'employee_chart_api' %}"></canvas>
+    </div>
+  </div>
+</div>
+
+<!-- TABLE -->
+<div class="card shadow-sm">
+  <div class="card-body">
+
+    <div class="table-responsive">
+      <table class="table align-middle" id="EmployeeReportTable" data-pagination="report" data-rows="5">
+
+        <thead>
+          <tr>
+            <th></th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Department</th>
+            <th>Designation</th>
+            <th>Joining Date</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {% if employees %}
+            {% for emp in employees %}
+            <tr>
+              <td>
+                {% if emp.photo %}
+                  <img src="{{ emp.photo.url }}" class="avatar">
+                {% else %}
+                  <span class="text-muted">-</span>
+                {% endif %}
+              </td>
+              <td class="fw-semibold">{{ emp.name }}</td>
+              <td>{{ emp.email }}</td>
+              <td>{{ emp.phone }}</td>
+              <td>{{ emp.department }}</td>
+              <td>{{ emp.designation }}</td>
+              <td>{{ emp.joining_date }}</td>
+            </tr>
+            {% endfor %}
+          {% else %}
+            <tr>
+              <td colspan="7" class="text-center text-muted">
+                No employees found.
+              </td>
+            </tr>
+          {% endif %}
+        </tbody>
+
+      </table>
+
+      {% include "components/TableControls.html" with table_id="EmployeeReportTable" %}
+    </div>
+
+  </div>
+</div>
+
+{% endif %}
+
+<!-- CHART -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{% static 'js/employee_report.js' %}"></script>
+
+{% endblock %}

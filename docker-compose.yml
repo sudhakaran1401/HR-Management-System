@@ -1,0 +1,82 @@
+version: "3.9"
+
+services:
+
+  mysql:
+    image: mysql:8.4
+    container_name: hrms_mysql
+    restart: unless-stopped
+
+    environment:
+      MYSQL_DATABASE: hrms
+      MYSQL_USER: hrms_user
+      MYSQL_PASSWORD: hrms_password
+      MYSQL_ROOT_PASSWORD: rootpassword
+
+    ports:
+      - "3307:3306"
+
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+    networks:
+      - hrms_network
+
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-prootpassword"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+
+  backend:
+    build:
+      context: ./backend
+
+    container_name: hrms_backend
+    restart: unless-stopped
+
+    env_file:
+      - ./backend/.env
+
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+    ports:
+      - "8000:8000"
+
+    volumes:
+      - ./backend:/app
+
+    networks:
+      - hrms_network
+
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        VITE_API_URL: http://127.0.0.1:8000
+
+    container_name: hrms_frontend
+    restart: unless-stopped
+
+    depends_on:
+      - backend
+
+    ports:
+      - "3000:80"
+
+    networks:
+      - hrms_network
+
+
+volumes:
+  mysql_data:
+
+
+networks:
+  hrms_network:
+    driver: bridge

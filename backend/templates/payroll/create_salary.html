@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+{% block content %}
+
+{% load static %}
+
+<!-- HEADER -->
+<div class="page-header d-flex justify-content-between align-items-center">
+  <h4 class="mb-0 fw-bold">
+    {% if is_update %}Update Payroll{% else %}Add Payroll{% endif %}
+  </h4>
+</div>
+
+<div class="row justify-content-center">
+  <div class="col-md-9">
+
+    <div class="card shadow-sm form-card">
+      <div class="card-body p-4">
+
+        {% include "components/messages.html" %}
+
+        <form method="post" autocomplete="off">
+          {% csrf_token %}
+          <div class="section-title">Basic Info</div>
+          <div class="row g-3">
+
+            <!-- EMPLOYEE -->
+            <div class="col-md-6">
+              <label class="form-label">Employee</label>
+              <br>
+              {% if is_update %}
+                <input type="hidden" name="employee" value="{{ form.instance.employee.id }}">
+                <input type="text" class="form-control" value="{{ form.instance.employee }}" readonly>
+              {% else %}
+                {{ form.employee }}
+              {% endif %}
+            </div>
+
+            <!-- MONTH -->
+            <div class="col-md-6">
+              <label class="form-label">Pay Month</label>
+              {% if is_update %}
+                <input type="hidden" name="pay_month" value="{{ form.instance.pay_month|date:'Y-m-d' }}">
+                <input type="text" class="form-control" value="{{ form.instance.pay_month }}" readonly>
+              {% else %}
+                {{ form.pay_month }}
+              {% endif %}
+            </div>
+
+            <!-- DAILY AMOUNT -->
+            <div class="col-md-4">
+              <label class="form-label">Amount per Day</label>
+              {{ form.amt_per_day }}
+            </div>
+
+          </div>
+          
+          <br>
+          <!-- SALARY BREAKDOWN -->
+          <div class="section-title">Earnings</div>
+
+          <div class="row g-3">
+            <div class="col-md-4">
+              <label class="form-label">Basic</label>
+              {{ form.basic }}
+            </div>
+
+            <div class="col-md-4">
+              <label class="form-label">HRA</label>
+              {{ form.hra }}
+            </div>
+
+            <div class="col-md-4">
+              <label class="form-label">Allowances</label>
+              {{ form.allowances }}
+            </div>
+          </div>
+
+          <br>
+
+          <div class="section-title">Deductions</div>
+
+          <div class="row g-3">
+            <div class="col-md-4">
+              <label class="form-label">PF</label>
+              {{ form.pf }}
+            </div>
+
+            <div class="col-md-4">
+              <label class="form-label">Tax</label>
+              {{ form.tax }}
+            </div>
+
+            <div class="col-md-4">
+              <label class="form-label">Other Deductions</label>
+              {{ form.other_deductions }}
+            </div>
+          </div>
+
+          <br>
+
+          <div class="section-title">Other Details</div>
+
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label">Paid Date</label>
+              {{ form.paid_date }}
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">Notes</label>
+              {{ form.notes }}
+            </div>
+          </div>
+
+          <!-- ACTIONS -->
+          <div class="mt-4 d-flex justify-content-end gap-2">
+
+            <a class="btn btn-outline-secondary"
+               href="{% url 'all_salary_history' %}">
+               Payroll List
+            </a>
+
+            <button class="btn btn-primary">
+              {% if is_update %}Update Payroll{% else %}Add Payroll{% endif %}
+            </button>
+
+          </div>
+
+        </form>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- JS (UNCHANGED) -->
+<script src="{% static 'js/create_salary.js' %}"></script>
+{% endblock %}

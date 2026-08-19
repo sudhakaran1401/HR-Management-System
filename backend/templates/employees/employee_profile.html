@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-- HEADER -->
+<div class="page-header d-flex justify-content-between align-items-center">
+
+  <h4 class="mb-0 fw-bold">Profile</h4>
+
+  <div class="d-flex flex-wrap gap-2">
+
+    <a class="btn btn-light" href="/">Back</a>
+
+    {% if viewer_role == "HR" %}
+      <a class="btn btn-warning text-white" href="{% url 'employee_update' employee.id %}">Edit</a>
+      <a class="btn btn-danger" href="{% url 'employee_delete' employee.id %}">Delete</a>
+      <a class="btn btn-primary" href="{% url 'mark_attendance_by_hr' employee.id %}">Attendance</a>
+      <a class="btn btn-outline-light" href="{% url 'leave_balance_by_employee' employee.id %}">Leaves</a>
+      <a class="btn btn-success " href="{% url 'employee_salary_history_hr' employee.id %}">Salary</a>
+    {% else %}
+      <a class="btn btn-primary " href="{% url 'attendance_history' %}">Attendance</a>
+      <a class="btn btn-outline-light" href="{% url 'leave_balance' %}">Leaves</a>
+      <a class="btn btn-success " href="{% url 'employee_salary_history' %}">Salary</a>
+    {% endif %}
+
+  </div>
+</div>
+
+<div class="row g-4">
+
+  <!-- PROFILE CARD -->
+  <div class="col-md-4 kpi-card">
+    <div class="card shadow-sm profile-card text-center">
+      <div class="card-body">
+        <div class="d-flex justify-content-center">
+        {% if employee.photo %}
+          <img src="{{ employee.photo.url }}" class="avatar shadow-sm">
+        {% else %}
+          <div class="avatar-initial">
+            {{ employee.name|slice:":1"|upper }}
+          </div>
+        {% endif %}
+        </div>
+        <h5 class="mt-3 mb-1">{{ employee.name }}</h5>
+        <div class="text-muted">{{ employee.designation|default:"-" }}</div>
+        <div class="text-muted">{{ employee.department }}</div>
+
+        <div class="d-grid gap-4 mt-3">
+          <a class="btn btn-primary btn-sm" href="mailto:{{ employee.email }}">Email</a>
+          <a class="btn btn-outline-primary btn-sm" href="tel:{{ employee.phone }}">Call</a>
+        </div><br>
+
+
+      </div>
+    </div>
+  </div>
+
+  <!-- DETAILS -->
+  <div class="col-md-8 kpi-card">
+    <div class="card shadow-sm profile-card">
+      <div class="card-body">
+
+        <h5 class="mb-3">Employee Details</h5>
+
+        <div class="detail-row">
+          <span class="detail-label">Employee ID</span>
+          <span class="detail-value">#{{ employee.id }}</span>
+        </div>
+
+        <div class="detail-row">
+          <span class="detail-label">Name</span>
+          <span class="detail-value">{{ employee.name }}</span>
+        </div>
+
+        <div class="detail-row">
+          <span class="detail-label">Email</span>
+          <span class="detail-value">{{ employee.email }}</span>
+        </div>
+
+        <div class="detail-row">
+          <span class="detail-label">Phone</span>
+          <span class="detail-value">{{ employee.phone }}</span>
+        </div>
+
+        <div class="detail-row">
+          <span class="detail-label">Department</span>
+          <span class="detail-value">{{ employee.department }}</span>
+        </div>
+
+        <div class="detail-row">
+          <span class="detail-label">Designation</span>
+          <span class="detail-value">{{ employee.designation }}</span>
+        </div>
+
+        <div class="detail-row">
+          <span class="detail-label">Joining Date</span>
+          <span class="detail-value">{{ employee.joining_date }}</span>
+        </div>
+
+        <div class="detail-row">
+          <span class="detail-label">DOB</span>
+          <span class="detail-value">{{ employee.dob }}</span>
+        </div>
+
+        <div class="detail-row" style="border-bottom:none;">
+          <span class="detail-label">Address</span>
+          <span class="detail-value">{{ employee.address|default:"-" }}</span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+{% endblock %}

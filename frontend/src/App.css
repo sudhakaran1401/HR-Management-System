@@ -1,0 +1,626 @@
+/* ==========================================================
+   GLOBAL
+   ========================================================== */
+
+body {
+  margin: 0;
+  padding-top: 65px;
+  font-size: 14px;
+  background: var(--bg-gradient);
+  color: var(--text-color);
+  transition: background var(--transition), color var(--transition);
+}
+
+.main-content {
+  padding-top: 75px;
+}
+
+/* ==========================================================
+   THEME TOGGLE
+   ========================================================== */
+
+.theme-toggle {
+  display: flex;
+  align-items: center;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 48px;
+  height: 24px;
+}
+
+.switch input {
+  display: none;
+}
+
+.slider {
+  position: absolute;
+  inset: 0;
+  cursor: pointer;
+  background: #6c757d;
+  border-radius: 50px;
+  transition: var(--transition);
+}
+
+.slider::before {
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  left: 3px;
+  bottom: 3px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, .15);
+  transition: var(--transition);
+}
+
+input:checked + .slider {
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+}
+
+input:checked + .slider::before {
+  transform: translateX(24px);
+}
+
+/* ==========================================================
+   NAVBAR
+   ========================================================== */
+
+.navbar {
+  min-height: 65px;
+  background: var(--navbar-bg) !important;
+  box-shadow: var(--shadow-sm);
+  transition: background-color var(--transition), box-shadow var(--transition);
+}
+
+.navbar-brand {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: .3px;
+}
+
+.navbar-nav .nav-link {
+  padding: .55rem .9rem;
+  border-radius: 8px;
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.navbar-nav .nav-link:hover {
+  background: rgba(255, 255, 255, .08);
+}
+
+.navbar .dropdown-toggle::after {
+  margin-left: 8px;
+}
+
+.navbar .dropdown-menu {
+  min-width: 220px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.navbar .dropdown-item {
+  padding: 11px 18px;
+}
+
+/* ==========================================================
+   CARDS
+   ========================================================== */
+
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.dashboard-card {
+  position: relative;
+  overflow: hidden;
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+
+.dashboard-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary), var(--primary-light));
+}
+
+.dashboard-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+/* ==========================================================
+   TABLES
+   ========================================================== */
+
+.table,
+.table td,
+.table th {
+  vertical-align: middle;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.table {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.table thead th {
+  background: linear-gradient(180deg, #ffffff, #f2f7fd);
+  border-bottom: 1px solid var(--border-color);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .035em;
+  color: var(--text-color);
+}
+
+.table td,
+.table th {
+  padding: 12px 13px;
+  border-color: var(--border-color);
+}
+
+.table tbody tr {
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.table tbody tr:hover {
+  background: rgba(37, 99, 235, .04);
+}
+
+.table a {
+  color: var(--primary);
+}
+
+.table a:hover {
+  color: var(--primary-dark);
+}
+
+/* ==========================================================
+   BUTTONS
+   ========================================================== */
+
+.btn {
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast),
+    background-color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  border: none;
+}
+
+.btn-success {
+  background: linear-gradient(135deg, var(--success), var(--success-light));
+  border: none;
+}
+
+.btn-danger {
+  background: linear-gradient(135deg, var(--danger), var(--danger-light));
+  border: none;
+}
+
+.btn-warning {
+  background: linear-gradient(135deg, var(--warning), var(--warning-light));
+  border: none;
+  color: #222;
+}
+
+.btn-info {
+  background: linear-gradient(135deg, var(--info), var(--info-light));
+  border: none;
+}
+
+.btn-group .btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ==========================================================
+   FORMS
+   ========================================================== */
+
+.form-label,
+.form-card label,
+.form-card-lg label,
+.form-container label,
+.form-container-sm label {
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.form-control,
+.form-select,
+.form-card input,
+.form-card select,
+.form-card textarea,
+.form-card-lg input,
+.form-card-lg select,
+.form-card-lg textarea {
+  font-size: 14px;
+}
+
+.form-control,
+.form-select {
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  background: rgba(255, 255, 255, .92);
+  transition: border-color var(--transition), background-color var(--transition),
+    box-shadow var(--transition);
+}
+
+.form-control:hover,
+.form-select:hover {
+  border-color: var(--primary-light);
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--primary);
+  background: #fff;
+  box-shadow: 0 0 0 .18rem rgba(37, 99, 235, .15);
+}
+
+.form-control::placeholder {
+  color: #98a2b3;
+}
+
+.form-control-lg {
+  height: 42px;
+}
+
+.input-group-text {
+  background: linear-gradient(180deg, #ffffff, #f6f9fc);
+  border-color: var(--border-color);
+  color: var(--text-color);
+}
+
+/* ==========================================================
+   DARK MODE
+   ========================================================== */
+
+body.dark-mode {
+  background: var(--bg-gradient) !important;
+  color: var(--text-color) !important;
+}
+
+body.dark-mode .form-control,
+body.dark-mode .form-select {
+  background: #1e293b !important;
+  color: #f8fafc !important;
+  border-color: #334155 !important;
+}
+
+body.dark-mode .form-control:hover,
+body.dark-mode .form-select:hover {
+  border-color: var(--primary-light) !important;
+}
+
+body.dark-mode .form-control:focus,
+body.dark-mode .form-select:focus {
+  background: #243247 !important;
+  color: #fff !important;
+  border-color: var(--primary-light) !important;
+  box-shadow: 0 0 0 .18rem rgba(59, 130, 246, .18);
+}
+
+body.dark-mode .form-control::placeholder {
+  color: #94a3b8;
+}
+
+body.dark-mode label,
+body.dark-mode .form-label {
+  color: #f1f5f9;
+}
+
+body.dark-mode .input-group-text {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+  color: #f8fafc !important;
+}
+
+body.dark-mode .dropdown-menu {
+  background: #111827 !important;
+  border-color: #263244 !important;
+}
+
+body.dark-mode .dropdown-item {
+  color: #e5e7eb !important;
+}
+
+body.dark-mode .dropdown-item:hover {
+  background: #172554 !important;
+  color: #bfdbfe !important;
+}
+
+/* Tables: one consistent dark surface, no Bootstrap white rows. */
+body.dark-mode .table {
+  --bs-table-bg: #111827;
+  --bs-table-color: #e5e7eb;
+  --bs-table-border-color: #334155;
+  --bs-table-striped-bg: #151f31;
+  --bs-table-striped-color: #e5e7eb;
+  --bs-table-hover-bg: #182235;
+  --bs-table-hover-color: #f8fafc;
+  color: #e5e7eb !important;
+}
+
+body.dark-mode .table thead th {
+  background: #1e293b !important;
+  color: #f8fafc !important;
+  border-color: #334155 !important;
+}
+
+body.dark-mode .table tbody tr,
+body.dark-mode .table tbody tr > td,
+body.dark-mode .table tbody tr > th {
+  background-color: #111827 !important;
+  color: #e5e7eb !important;
+  border-color: #334155 !important;
+}
+
+body.dark-mode .table tbody tr:hover,
+body.dark-mode .table tbody tr:hover > td,
+body.dark-mode .table tbody tr:hover > th {
+  background-color: #182235 !important;
+  color: #f8fafc !important;
+}
+
+body.dark-mode .table tbody tr:hover a,
+body.dark-mode .table a,
+body.dark-mode .table a:hover {
+  color: #93c5fd !important;
+}
+
+/* Bootstrap light/secondary classes must not create white strips. */
+body.dark-mode .table .table-light,
+body.dark-mode .table .table-secondary,
+body.dark-mode .table .bg-light,
+body.dark-mode .table .bg-secondary {
+  background-color: #111827 !important;
+  color: #e5e7eb !important;
+}
+
+body.dark-mode .btn-light,
+body.dark-mode .btn.bg-light,
+body.dark-mode .btn-group .btn-light {
+  background: #1e293b !important;
+  color: #f8fafc !important;
+  border-color: #475569 !important;
+}
+
+body.dark-mode .btn-light:hover,
+body.dark-mode .btn.bg-light:hover,
+body.dark-mode .btn-group .btn-light:hover {
+  background: #26344a !important;
+  color: #fff !important;
+  border-color: #64748b !important;
+}
+
+body.dark-mode .btn-outline-secondary {
+  background: #172033 !important;
+  color: #fff !important;
+  border-color: #64748b !important;
+}
+
+body.dark-mode .btn-outline-secondary:hover {
+  background: #26344a !important;
+}
+
+body.dark-mode .bg-white {
+  background: #111827 !important;
+  color: #e5e7eb !important;
+}
+
+body.dark-mode .text-muted,
+body.dark-mode .text-body-secondary {
+  color: #cbd5e1 !important;
+}
+
+body.dark-mode .text-dark,
+body.dark-mode .text-body,
+body.dark-mode .text-black {
+  color: #f8fafc !important;
+}
+
+body.dark-mode .text-secondary {
+  color: #cbd5e1 !important;
+}
+
+body.dark-mode a {
+  color: #93c5fd;
+}
+
+/* ==========================================================
+   PAGINATION
+   ========================================================== */
+
+.pagination,
+.pagination * {
+  user-select: none;
+}
+
+.pagination {
+  font-size: 13px;
+}
+
+.page-item .page-link {
+  margin: 0 3px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  color: var(--text-color);
+  font-size: 13px;
+  transition: background-color var(--transition), color var(--transition),
+    border-color var(--transition);
+}
+
+.page-item.active .page-link {
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  border-color: transparent;
+  color: #fff;
+}
+
+.page-item .page-link:hover {
+  background: rgba(37, 99, 235, .08);
+  border-color: var(--primary-light);
+}
+
+body.dark-mode .page-item .page-link {
+  background: #1e293b;
+  color: #f8fafc;
+  border-color: #334155;
+}
+
+body.dark-mode .page-item .page-link:hover {
+  background: #182235;
+}
+
+/* ==========================================================
+   BADGES
+   ========================================================== */
+
+.badge,
+.leave-badge {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .25px;
+  border-radius: 999px;
+}
+
+.badge {
+  padding: .45rem .8rem;
+}
+
+.bg-success,
+.badge.bg-success {
+  background: linear-gradient(135deg, var(--success), var(--success-light)) !important;
+}
+
+.bg-danger,
+.badge.bg-danger {
+  background: linear-gradient(135deg, var(--danger), var(--danger-light)) !important;
+}
+
+.bg-warning,
+.badge.bg-warning {
+  background: linear-gradient(135deg, var(--warning), var(--warning-light)) !important;
+  color: #222 !important;
+}
+
+.bg-info,
+.badge.bg-info {
+  background: linear-gradient(135deg, var(--info), var(--info-light)) !important;
+  color: #111 !important;
+}
+
+.bg-primary,
+.badge.bg-primary {
+  background: linear-gradient(135deg, var(--primary), var(--primary-light)) !important;
+}
+
+/* ==========================================================
+   IMAGES / CHARTS
+   ========================================================== */
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+.card img:hover {
+  transform: scale(1.02);
+}
+
+.chart-container {
+  position: relative;
+  width: 100%;
+  min-height: 320px;
+}
+
+/* ==========================================================
+   TRANSITIONS / FOCUS
+   ========================================================== */
+
+.card,
+.table,
+.form-control,
+.form-select,
+.btn,
+.dropdown-menu,
+.navbar,
+.badge,
+.page-link,
+.input-group-text {
+  transition:
+    background-color var(--transition),
+    color var(--transition),
+    border-color var(--transition),
+    box-shadow var(--transition),
+    transform var(--transition);
+}
+
+.form-control:focus,
+.form-select:focus,
+.btn:focus,
+.btn:active:focus,
+.page-link:focus {
+  outline: none;
+  box-shadow: 0 0 0 .18rem rgba(37, 99, 235, .18);
+}
+
+body.dark-mode .form-control:focus,
+body.dark-mode .form-select:focus,
+body.dark-mode .btn:focus,
+body.dark-mode .page-link:focus {
+  box-shadow: 0 0 0 .18rem rgba(59, 130, 246, .18);
+}
+
+/* ==========================================================
+   DATE / TIME INPUTS
+   ========================================================== */
+
+body.dark-mode input[type="date"]::-webkit-calendar-picker-indicator,
+body.dark-mode input[type="time"]::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+}
+
+body.dark-mode .form-select {
+  color-scheme: dark;
+}
+
+/* ==========================================================
+   RESPONSIVE TABLE / TYPE
+   ========================================================== */
+
+@media (max-width: 768px) {
+  body {
+    font-size: 14px;
+  }
+
+  .table,
+  .table td,
+  .table th {
+    font-size: 13px;
+  }
+
+  .table thead th {
+    font-size: 11px;
+  }
+}

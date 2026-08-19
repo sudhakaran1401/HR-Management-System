@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-- HEADER -->
+<div class="page-header d-flex justify-content-between align-items-center">
+  <h4 class="mb-0 fw-bold">Payslip Preview</h4>
+
+  <div class="d-flex gap-2">
+    <a class="btn btn-light" href="{% url 'payslip_pdf' salary.id %}">
+      Download PDF
+    </a>
+
+    {% if request.user.is_staff %}
+    <a class="btn btn-warning"
+       href="{% url 'update_salary' salary.id %}">
+       Update
+    </a>
+    {% endif %}
+  </div>
+</div>
+
+<div class="card shadow-sm payslip-card">
+  <div class="card-body">
+
+    <!-- EMPLOYEE INFO -->
+    
+      <div class="col-md-6">
+        <h4 class = "mb-3">{{ salary.employee.name }}</h4>
+        <p><b>Email:</b> {{ salary.employee.email }}</p>
+        <p><b>Department:</b> {{ salary.employee.department }}</p>
+        <p><b>Designation:</b> {{ salary.employee.designation }}</p>
+        <p><b>Pay Month:</b> {{ salary.pay_month|date:"M Y" }}</p>
+      </div>
+
+    <hr>
+
+    <!-- SALARY TABLE -->
+    <div class="table-responsive">
+      <table class="table2 table-bordered">
+
+        <thead>
+          <tr>
+            <th class="text-dark">Earnings</th>
+            <th class="text-dark">Amount</th>
+            <th class="text-dark">Deductions</th>
+            <th class="text-dark">Amount</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+          <tr>
+            <td>Basic</td>
+            <td>{{ salary.basic }}</td>
+            <td>PF</td>
+            <td>{{ salary.pf }}</td>
+          </tr>
+
+          <tr>
+            <td>HRA</td>
+            <td>{{ salary.hra }}</td>
+            <td>Tax</td>
+            <td>{{ salary.tax }}</td>
+          </tr>
+
+          <tr>
+            <td>Allowances</td>
+            <td>{{ salary.allowances }}</td>
+            <td>Other</td>
+            <td>{{ salary.other_deductions }}</td>
+          </tr>
+
+          <tr class="table-light">
+            <td><b>Gross</b></td>
+            <td><b>{{ salary.gross }}</b></td>
+            <td><b>Total Deductions</b></td>
+            <td><b>{{ salary.total_deductions }}</b></td>
+          </tr>
+
+          <tr>
+            <td colspan="2"></td>
+            <td class="fw-bold">Net Pay</td>
+            <td class="fw-bold">{{ salary.net_pay }}</td>
+          </tr>
+
+        </tbody>
+
+      </table>
+    </div>
+
+    <!-- NOTES -->
+    {% if salary.notes %}
+    <div class="mt-3 summary-box">
+      <b>Notes:</b> {{ salary.notes }}
+    </div>
+    {% endif %}
+
+  </div>
+</div>
+
+{% endblock %}

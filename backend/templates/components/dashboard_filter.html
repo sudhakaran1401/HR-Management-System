@@ -1,0 +1,31 @@
+<form method="get" class="d-flex align-items-center gap-2 filter-box">
+    <select name="year" class="form-select form-select-sm">
+      <option value="">Year</option>
+      {% for y in years %}
+        <option value="{{ y }}" {% if request.GET.year == y|stringformat:"s" %}selected{% endif %}>
+          {{ y }}
+        </option>
+      {% endfor %}
+    </select>
+
+    <select name="month" class="form-select form-select-sm">
+      <option value="">Month</option>
+      {% for num,name in months %}
+        <option value="{{ num }}" {% if request.GET.month == num|stringformat:"s" %}selected{% endif %}>
+          {{ name }}
+        </option>
+      {% endfor %}
+    </select>
+
+    <select name="date" class="form-select form-select-sm">
+      <option value="">Day</option>
+      {% for d in day_range %}
+      <option value="{{ d }}" {% if request.GET.date == d|stringformat:"s" %}selected{% endif %}>
+      {{ d }}
+      </option>
+      {% endfor %}
+    </select>
+
+    <button type="submit" class="btn btn-primary btn-sm btn-modern">Filter</button>
+    <a class="btn btn-dark btn-sm btn-modern text-white" href="{{ reset_url }}">Reset</a>
+  </form>

@@ -1,0 +1,27 @@
+{% if csv_download_url and pdf_download_url %}
+
+<div class="btn-group shadow-sm">
+
+  <!-- CSV -->
+  <a class="btn btn-success btn-sm download-btn justify-content-center"
+     href="{{ csv_download_url }}?{{ request.GET.urlencode }}"
+     data-message="CSV report downloaded successfully">
+    CSV
+  </a>
+
+  <!-- ICON (center) -->
+  <span class="btn btn-light btn-sm d-flex align-items-center justify-content-center"
+        style="pointer-events:none;">
+    <i class="bi bi-download"></i>
+  </span>
+
+  <!-- PDF -->
+  <a class="btn btn-danger btn-sm download-btn justify-content-center"
+     href="{{ pdf_download_url }}?{{ request.GET.urlencode }}"
+     data-message="PDF report downloaded successfully">
+    PDF
+  </a>
+
+</div>
+
+{% endif %}

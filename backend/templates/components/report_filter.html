@@ -1,0 +1,38 @@
+<form method="get" class="row g-3 align-items-end">
+
+      <!-- Month -->
+      {% if show_month %}
+      <div class="col-md-2">
+        <label class="form-label">Month</label>
+        {{ form.month }}
+      </div>
+      {% endif %}
+
+      <!-- Year -->
+      {% if show_year %}
+      <div class="col-md-2">
+        <label class="form-label">Year</label>
+        {{ form.year }}
+      </div>
+      {% endif %}
+
+      <!-- Employee -->
+      {% if show_employee %}
+      <div class="col-md-4">
+        <label class="form-label">Employee</label>
+        {{ form.employee }}
+      </div>
+      {% endif %}
+
+      <!-- Buttons -->
+      <div class="col-md-4 d-flex gap-2">
+        <button class="btn btn-primary btn-modern">Generate</button>
+
+        <a class="btn btn-secondary btn-modern text-white" href="{{ reset_url }}">Reset</a>
+
+        {% if show_download %}
+          {% include "components/download_buttons.html" %}
+        {% endif %}
+      </div>
+
+</form>
